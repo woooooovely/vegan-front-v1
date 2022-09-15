@@ -2,10 +2,11 @@ import styled from "styled-components";
 import Image from "../Logo.png";
 const Logo = styled.img`
   position: absolute;
-  margin-top: 69px;
-  left: 120px;
-  width: 190px;
-  height: 50px;
+  margin: 0;
+  top: 74px;
+  left: 115px;
+  width: 192px;
+  height: 53px;
 `;
 const Top = styled.div`
   width: 100%;
@@ -17,7 +18,6 @@ export default function Headers() {
     <>
       <Top>
         <Logo src={Image} />
-        <div>안녕하세요</div>
       </Top>
     </>
   );
