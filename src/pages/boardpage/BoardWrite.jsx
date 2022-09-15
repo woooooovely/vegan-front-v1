@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AiOutlinePicture } from "react-icons/ai";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 const Box = styled.div`
   position: absolute;
   width: 358px;
@@ -105,8 +105,10 @@ const YourStory = styled.div`
 `;
 const InputEl = styled.input`
   position: absolute;
-  top: 550px;
-  left: 400px;
+  width: 25px;
+  height: 26px;
+  left: 1468px;
+  top: 905px;
 `;
 const Image = styled(AiOutlinePicture)`
   position: absolute;
@@ -116,33 +118,35 @@ const Image = styled(AiOutlinePicture)`
   top: 905px;
 `;
 export default function BoardWrite() {
+  const [pictureUrl, showPictureUrl] = useState([]);
+  const [state, setState] = useState(false);
   const arr = [
     { name: "제목", user: "제목을 입력하세요" },
     { name: "분류", user: "분류를 입력하세요" },
   ];
-  const imageRef = useRef();
-  //   imageSelector.addEventListener("change", function (e) {
-  //     const files = e.target.files;
-  //     if (!!files) {
-  //       insertImageDate(files[0]);
-  //     }
-  //   });
-  function ImageSelector() {
-    imageRef.current.onClick();
-  }
+  const editorRef = useRef();
+
   function GetImage(e) {
     const files = e.target.files;
-    if (!!files) {
+    if (files) {
+      console.log(files[0]);
       insertImageDate(files[0]);
     }
   }
-  const insertImageDate = (file) => {
+  function insertImageDate(file) {
     const reader = new FileReader();
     reader.onload(() => {
-      document.execCommand("inserImage", false, `${reader.result}`);
+      focusEditor();
+      document.execCommand("insertImage", false, `${reader.result}`);
+      setState(true);
+      showPictureUrl(reader.readAsDataURL(file));
     });
     reader.readAsDataURL(file);
-  };
+  }
+  function focusEditor() {
+    editorRef.current.focus();
+  }
+
   //   function insertImageDate(file) {
   //     const reader = new FileReader();
   //     reader.addEventListener("load", function (e) {
@@ -151,6 +155,7 @@ export default function BoardWrite() {
   //     });
   //     reader.readAsDataURL(file);
   //   }
+
   return (
     <>
       <Box>
@@ -166,18 +171,11 @@ export default function BoardWrite() {
         ))}
       </Box2>
       <YourStory>당신의 이야기를 적어보세요</YourStory>
-      <MainText contentEditable="true">
-        <div style={{ position: "relative", color: "#696969", top: "0px" }}>
-          본문을 입력하세요.
-        </div>
+      <MainText ref={editorRef} contentEditable="true">
+        {state ? pictureUrl.map((user) => <img src={user}></img>) : <></>}
       </MainText>
-      <Image onClick={ImageSelector}></Image>
-      <InputEl
-        ref={imageRef}
-        onChange={GetImage()}
-        type="file"
-        accept="image/*"
-      />
+      <Image></Image>
+      <InputEl onChange={(e) => GetImage(e)} type="file" accept="image/*" />
     </>
   );
 }

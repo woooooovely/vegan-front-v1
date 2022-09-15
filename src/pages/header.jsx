@@ -11,7 +11,6 @@ const Logo = styled.img`
 const Top = styled.div`
   width: 100%;
   height: 180px;
-  background-color: red;
 `;
 export default function Headers() {
   return (
