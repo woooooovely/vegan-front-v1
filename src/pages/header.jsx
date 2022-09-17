@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "../Logo.png";
+import { Link } from "react-router-dom";
 const Logo = styled.img`
   position: absolute;
   margin: 0;
@@ -12,11 +13,24 @@ const Top = styled.div`
   width: 100%;
   height: 180px;
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
 export default function Headers() {
   return (
     <>
       <Top>
-        <Logo src={Image} />
+        <StyledLink to="/">
+          <Logo src={Image} />
+        </StyledLink>
       </Top>
     </>
   );

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { AiOutlinePicture } from "react-icons/ai";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { StyledLink } from "../../Styledlink";
 const Box = styled.div`
   position: absolute;
   width: 358px;
@@ -109,6 +110,7 @@ const InputEl = styled.input`
   height: 26px;
   left: 1468px;
   top: 905px;
+  opacity: 0;
 `;
 const Image = styled(AiOutlinePicture)`
   position: absolute;
@@ -117,35 +119,65 @@ const Image = styled(AiOutlinePicture)`
   left: 1468px;
   top: 905px;
 `;
+const Button = styled.div`
+  position: absolute;
+  height: 56px;
+  width: 135px;
+  left: 400px;
+  top: 973px;
+  border-radius: 9px;
+  background-color: #2dda7d;
+  :hover {
+    background-color: #126136;
+  }
+`;
+const TextBox = styled.div`
+  position: absolute;
+  top: 14px;
+  left: 34px;
+  width: 80px;
+  height: 29px;
+
+  font-family: "Amiko";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 29px;
+
+  color: #ffffff;
+`;
+const Table = styled.div`
+  height: 900px;
+`;
 export default function BoardWrite() {
-  const [pictureUrl, showPictureUrl] = useState([]);
-  const [state, setState] = useState(false);
+  // const [pictureUrl, showPictureUrl] = useState([]);
+  // const [state, setState] = useState(false);
   const arr = [
     { name: "제목", user: "제목을 입력하세요" },
     { name: "분류", user: "분류를 입력하세요" },
   ];
   const editorRef = useRef();
 
-  function GetImage(e) {
-    const files = e.target.files;
-    if (files) {
-      console.log(files[0]);
-      insertImageDate(files[0]);
-    }
-  }
-  function insertImageDate(file) {
-    const reader = new FileReader();
-    reader.onload(() => {
-      focusEditor();
-      document.execCommand("insertImage", false, `${reader.result}`);
-      setState(true);
-      showPictureUrl(reader.readAsDataURL(file));
-    });
-    reader.readAsDataURL(file);
-  }
-  function focusEditor() {
-    editorRef.current.focus();
-  }
+  // function GetImage(e) {
+  //   const files = e.target.files;
+  //   if (files) {
+  //     console.log(files[0]);
+  //     insertImageDate(files[0]);
+  //   }
+  // }
+  // function insertImageDate(file) {
+  //   const reader = new FileReader();
+  //   reader.onload(() => {
+  //     focusEditor();
+  //     document.execCommand("insertImage", false, `${reader.result}`);
+  //     setState(true);
+  //     showPictureUrl(reader.readAsDataURL(file));
+  //   });
+  //   reader.readAsDataURL(file);
+  // }
+  // function focusEditor() {
+  //   editorRef.current.focus();
+  // }
 
   //   function insertImageDate(file) {
   //     const reader = new FileReader();
@@ -158,24 +190,32 @@ export default function BoardWrite() {
 
   return (
     <>
-      <Box>
-        <Write>글쓰기</Write>
-        <Ggool>나만에 꿀팁을 공유해보세요!</Ggool>
-      </Box>
-      <Box2>
-        {arr.map((user) => (
-          <>
-            <Text>{user.name}</Text>
-            <Title placeholder={user.user} />
-          </>
-        ))}
-      </Box2>
-      <YourStory>당신의 이야기를 적어보세요</YourStory>
-      <MainText ref={editorRef} contentEditable="true">
-        {state ? pictureUrl.map((user) => <img src={user}></img>) : <></>}
-      </MainText>
-      <Image></Image>
-      <InputEl onChange={(e) => GetImage(e)} type="file" accept="image/*" />
+      <Table>
+        <Box>
+          <Write>글쓰기</Write>
+          <Ggool>나만에 꿀팁을 공유해보세요!</Ggool>
+        </Box>
+        <Box2>
+          {arr.map((user) => (
+            <>
+              <Text>{user.name}</Text>
+              <Title placeholder={user.user} />
+            </>
+          ))}
+        </Box2>
+        <YourStory>당신의 이야기를 적어보세요</YourStory>
+        <MainText ref={editorRef} contentEditable="true">
+          {/* {state ? pictureUrl.map((user) => <img src={user}></img>) : <></>} */}
+        </MainText>
+        <Image></Image>
+        {/* <InputEl onChange={(e) => GetImage(e)} type="file" accept="image/*" /> */}
+        <InputEl type="file" accept="image/*" />
+        <StyledLink to="/">
+          <Button>
+            <TextBox>업로드</TextBox>
+          </Button>
+        </StyledLink>
+      </Table>
     </>
   );
 }
