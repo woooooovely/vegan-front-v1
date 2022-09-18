@@ -150,43 +150,30 @@ const Table = styled.div`
   height: 900px;
 `;
 export default function BoardWrite() {
-  // const [pictureUrl, showPictureUrl] = useState([]);
-  // const [state, setState] = useState(false);
   const arr = [
     { name: "제목", user: "제목을 입력하세요" },
     { name: "분류", user: "분류를 입력하세요" },
   ];
   const editorRef = useRef();
 
-  // function GetImage(e) {
-  //   const files = e.target.files;
-  //   if (files) {
-  //     console.log(files[0]);
-  //     insertImageDate(files[0]);
-  //   }
-  // }
-  // function insertImageDate(file) {
-  //   const reader = new FileReader();
-  //   reader.onload(() => {
-  //     focusEditor();
-  //     document.execCommand("insertImage", false, `${reader.result}`);
-  //     setState(true);
-  //     showPictureUrl(reader.readAsDataURL(file));
-  //   });
-  //   reader.readAsDataURL(file);
-  // }
-  // function focusEditor() {
-  //   editorRef.current.focus();
-  // }
+  function GetImage(e) {
+    const files = e.target.files;
+    if (files) {
+      insertImageDate(files[0]);
+    }
+  }
+  function focusEditor() {
+    editorRef.current.focus();
+  }
 
-  //   function insertImageDate(file) {
-  //     const reader = new FileReader();
-  //     reader.addEventListener("load", function (e) {
-  //       focusEditor();
-  //       document.execCommand("insertImage", false, `${reader.result}`);
-  //     });
-  //     reader.readAsDataURL(file);
-  //   }
+  function insertImageDate(file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", function (e) {
+      focusEditor();
+      document.execCommand("insertImage", false, `${reader.result}`);
+    });
+    reader.readAsDataURL(file);
+  }
 
   return (
     <>
@@ -204,12 +191,9 @@ export default function BoardWrite() {
           ))}
         </Box2>
         <YourStory>당신의 이야기를 적어보세요</YourStory>
-        <MainText ref={editorRef} contentEditable="true">
-          {/* {state ? pictureUrl.map((user) => <img src={user}></img>) : <></>} */}
-        </MainText>
+        <MainText ref={editorRef} contentEditable="true"></MainText>
         <Image></Image>
-        {/* <InputEl onChange={(e) => GetImage(e)} type="file" accept="image/*" /> */}
-        <InputEl type="file" accept="image/*" />
+        <InputEl onChange={(e) => GetImage(e)} type="file" accept="image/*" />
         <StyledLink to="/">
           <Button>
             <TextBox>업로드</TextBox>

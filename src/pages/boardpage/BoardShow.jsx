@@ -48,7 +48,7 @@ const Box2 = styled.div`
   width: 877px;
   left: 0px;
   right: 0px;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(118, 118, 118, 0.1);
